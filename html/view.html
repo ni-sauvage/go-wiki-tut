@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/resources/stylesheet.css">
+</head>
+<body>
+
+<ul class="navbar">
+    <li class="navbar"><a href="https://en.wikipedia.org/wiki/Drillship">Ships</a></li>
+    <li class="navbar"><a href="https://en.wikipedia.org/wiki/Gaelic_football">Football</a></li>
+    <li class="navbar"><a href="https://en.wikipedia.org/wiki/Speed_of_light">Zoom</a></li>
+</ul>
+
+<h1>{{.Title}}</h1>
+
+<p>[<a href="/edit/{{.Title}}">edit</a>]</p>
+
+<div>{{printf "%s" .Body}}</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+body {
+    background-color: cornflowerblue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+ul.navbar {
+    margin: auto;
+    overflow: scroll;
+    background-color: #142857;
+}
+
+li.navbar {
+    float:right;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: auto;
+    text-decoration: none;
+}
+  
+li a:hover {
+    background-color: #285714;
+}

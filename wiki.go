@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -9,7 +8,7 @@ import (
 	"regexp"
 )
 
-var templates = template.Must(template.ParseFiles("edit.html", "view.html"))
+var templates = template.Must(template.ParseFiles("html\\edit.html", "html\\view.html"))
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
 
 type Page struct {
@@ -18,22 +17,13 @@ type Page struct {
 }
 
 func (p *Page) save() error {
-	filename := p.Title + ".txt"
-	return ioutil.WriteFile(filename, p.Body, 0600)
-}
-
-func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
-	m := validPath.FindStringSubmatch(r.URL.Path)
-	if m == nil {
-		http.NotFound(w, r)
-		return "", errors.New("invalid Page Title")
-	}
-	return m[2], nil // The title is the second subexpression.
+	fileRelPath := "data\\" + p.Title + ".txt"
+	return ioutil.WriteFile(fileRelPath, p.Body, 0600)
 }
 
 func loadPage(title string) (*Page, error) {
-	filename := title + ".txt"
-	body, err := ioutil.ReadFile(filename)
+	fileRelPath := "data\\" + title + ".txt"
+	body, err := ioutil.ReadFile(fileRelPath)
 	if err != nil {
 		return nil, err
 	}
@@ -89,6 +79,6 @@ func main() {
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
-
+	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("./resources"))))
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
